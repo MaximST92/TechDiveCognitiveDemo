@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="maximst.CognitiveDemo.Forms.Views.FaceView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:maximst.CognitiveDemo.Forms.Converters;assembly=CognitiveDemo">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:PercentageConverter x:Key="converter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <Image HorizontalOptions="FillAndExpand" Source="{Binding ImagePath}" />
+                <TableView HasUnevenRows="True">
+                    <TableRoot>
+                        <TableSection Title="Age">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.age}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                        <TableSection Title="Gender">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.gender}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                        <TableSection Title="Smile">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.smile}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                        <TableSection Title="Glasses">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.glasses}" />
+                                </StackLayout>
+                            </ViewCell>
+
+                        </TableSection>
+                        <TableSection Title="Emotion">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.emotion.anger, Converter={StaticResource converter}, StringFormat='Anger: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.contempt, Converter={StaticResource converter}, StringFormat='Contempt: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.disgust, Converter={StaticResource converter}, StringFormat='Disgust: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.fear, Converter={StaticResource converter}, StringFormat='Fear: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.happiness, Converter={StaticResource converter}, StringFormat='Happiness: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.neutral, Converter={StaticResource converter}, StringFormat='Neutral: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.sadness, Converter={StaticResource converter}, StringFormat='Sadness: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.emotion.surprise, Converter={StaticResource converter}, StringFormat='Surprise: {0}'}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                        <TableSection Title="Facial hair">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.facialHair.moustache, Converter={StaticResource converter}, StringFormat='Moustache: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.facialHair.beard, Converter={StaticResource converter}, StringFormat='Beard: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.facialHair.sideburns, Converter={StaticResource converter}, StringFormat='Sideburns: {0}'}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                        <TableSection Title="Hair">
+                            <ViewCell>
+                                <StackLayout Padding="10">
+                                    <Label Text="{Binding Model.faceAttributes.hair.bald, Converter={StaticResource converter}, StringFormat='Bald: {0}'}" />
+                                    <Label Text="{Binding Model.faceAttributes.hair.invisible, Converter={StaticResource converter}, StringFormat='Invisible: {0}'}" />
+                                    <Label Text="Hair Color:" />
+                                    <ListView ItemsSource="{Binding Model.faceAttributes.hair.hairColor}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <StackLayout Padding="10" Orientation="Horizontal">
+                                                        <Label Text="{Binding color}" />
+                                                        <Label Text="{Binding confidence}" />
+                                                    </StackLayout>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackLayout>
+                            </ViewCell>
+                        </TableSection>
+                    </TableRoot>
+                </TableView>
+            </StackLayout>
+        </ScrollView>
+
+    </ContentPage.Content>
+</ContentPage>

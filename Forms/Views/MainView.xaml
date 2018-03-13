@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="maximst.CognitiveDemo.Forms.Views.MainView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <StackLayout>
+            <Button Command="{Binding CameraCommand}" Text="Face Api" />
+            <Button Command="{Binding VisionCommand}" Text="Vision" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

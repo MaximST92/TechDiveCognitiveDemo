@@ -1,0 +1,94 @@
+﻿﻿<#@ template language="C#" hostSpecific="true"  #>
+<#@ output extension=".generated.cs"  encoding="UTF-8"#>
+<#@ assembly name="System.Core"#>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+	// need to save in XLS as Windows CSV (for accents)
+	Process("maximst.CognitiveDemo.Core.Infrastructure", "Translations.csv");
+#>
+using System.Collections.Generic;
+using System.Globalization;
+
+namespace <#= NamespaceName #>
+{
+	public static partial class Translations
+	{
+
+		public static string[] Languages =
+		{
+<# foreach(var header in Headers.Skip(1)) { #>
+			"<#= header #>",
+<# } #>
+		};
+<# foreach(var key in Translations.Keys) { #>
+
+		public static string <#= key #> => GetString(TranslationKey.<#= key #>);
+<# } #>
+
+		static void Load()
+		{ 
+<# foreach(var key in Translations.Keys) { #>
+			TranslationItems.Add(TranslationKey.<#= key #>, new Dictionary<string, string> { <#= GetTranslation(key) #> });
+<# } #>
+		}
+	}
+
+	public enum TranslationKey
+	{
+	<# foreach(var key in Translations.Keys) { #>
+	    <#= key #>,
+<# } #>
+	}
+}
+<#+
+
+public string NamespaceName { get; set; }
+
+public Dictionary<string, Dictionary<string, string>> Translations { get; set; }
+
+public string[] Headers { get; set; }
+
+public void Process(string namespaceName, string importFile)
+{
+	Translations = new Dictionary<string, Dictionary<string, string>>();
+	NamespaceName = namespaceName;
+	var lines = File.ReadAllLines(Path.Combine(Path.GetDirectoryName(Host.TemplateFile), importFile), Encoding.UTF8);
+	// first line contains key followed by translations
+	Headers = lines[0].Split(';');
+	for (int i = 1; i < lines.Length; i++)
+	{
+		try
+		{
+			var data = lines[i].Split(';');
+			var key = data[0];
+			var translation = new Dictionary<string,string>();
+			for (int y = 1; y < data.Length; y++)
+			{
+				translation.Add(Headers[y], data[y]);
+			}
+			Translations.Add(key, translation);
+		}
+		catch(Exception exc)
+		{
+			throw new Exception($"Exception while parsing line {i}", exc) ;
+		}
+	}
+}
+
+public string GetTranslation(string translationKey)
+{
+	var result = string.Empty;
+	var translations = Translations[translationKey];
+	foreach(var key in translations.Keys)
+	{
+		bool isLastKey = key == translations.Keys.Last();
+		result += @"{ """ + key + @""", """ + translations[key] + @""" }";
+		if (!isLastKey) result += ", ";
+	}
+	return result;
+}
+#>
