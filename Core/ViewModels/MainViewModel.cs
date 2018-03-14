@@ -58,28 +58,20 @@ namespace maximst.CognitiveDemo.Core.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand(async () =>
                 {
                     try
                     {
-
-                        CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { CompressionQuality = 75 }).ContinueWith(x =>
+                        var mediaFile = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions() { CompressionQuality = 75 });
+                        Dialogs.ShowLoading();
+                        var model = await GetVisionResult(mediaFile.Path);
+                        using (var vm = GetViewModel<VisionViewModel>())
                         {
-                            var media = x.Result;
-                            Dialogs.ShowLoading();
-                            GetVisionResult(x.Result.Path).ContinueWith(v =>
-                            {
-                                var model = v.Result;
-                                var tags = model.Description.Captions.FirstOrDefault();
-                                if (tags != null)
-                                {
-                                    Dialogs.HideLoading();
-                                    Dialogs.Alert(tags.Text);
-                                }
-
-                            });
-
-                        });
+                            vm.Vision = model;
+                            vm.ImagePath = mediaFile.Path;
+                            Dialogs.HideLoading();
+                            await vm.ShowAsync();
+                        }
                     }
                     catch (Exception e)
                     {
