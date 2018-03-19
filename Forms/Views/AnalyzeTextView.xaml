@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="maximst.CognitiveDemo.Forms.Views.AnalyzeTextView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Content>
+        <StackLayout
+            Padding="20"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand">
+            <Editor
+                HorizontalOptions="FillAndExpand"
+                Text="{Binding InputText, Mode=OneWayToSource}"
+                VerticalOptions="FillAndExpand" />
+            <Button
+                BorderColor="Blue"
+                BorderWidth="1"
+                Command="{Binding LanguageCommand}"
+                HeightRequest="44"
+                HorizontalOptions="FillAndExpand"
+                Text="Language" />
+            <Button
+                BorderColor="Blue"
+                BorderWidth="1"
+                Command="{Binding KeyPhrasesCommand}"
+                HeightRequest="44"
+                HorizontalOptions="FillAndExpand"
+                Text="Key Phrases" />
+            <Button
+                BorderColor="Blue"
+                BorderWidth="1"
+                Command="{Binding SentimentCommand}"
+                HeightRequest="44"
+                HorizontalOptions="FillAndExpand"
+                Text="Sentiment" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

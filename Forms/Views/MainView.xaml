@@ -4,9 +4,10 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
             <Button Command="{Binding CameraCommand}" Text="Face Api" />
             <Button Command="{Binding VisionCommand}" Text="Vision" />
+            <Button Command="{Binding TextAnalyticsCommand}" Text="Text Analytics" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

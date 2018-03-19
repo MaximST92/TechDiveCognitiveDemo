@@ -81,6 +81,20 @@ namespace maximst.CognitiveDemo.Core.ViewModels
                 });
             }
         }
+
+        public ICommand TextAnalyticsCommand
+        {
+            get
+            {
+                return new RelayCommand(async () =>
+              {
+                  using (var vm = GetViewModel<AnalyzeTextViewModel>())
+                  {
+                      await vm.ShowAsync();
+                  }
+              });
+            }
+        }
         public FaceModel FaceModel { get; set; }
 
         private async Task<FaceModel[]> GetFaceResult(string filePath)
@@ -125,7 +139,7 @@ namespace maximst.CognitiveDemo.Core.ViewModels
                 {
                     var queryString = HttpUtility.ParseQueryString(string.Empty);
                     client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", Api.KeyVision);
-                    queryString["visualFeatures"] = "Description ";
+                    queryString["visualFeatures"] = "Description,Tags,Faces,ImageType,Color,Adult ";
                     queryString["language"] = "en";
                     var uri = Api.UriBaseVision + "?" + queryString;
                     var data = await GetImageAsByteArray(filePath);

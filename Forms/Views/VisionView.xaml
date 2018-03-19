@@ -18,7 +18,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <ListView ItemsSource="{Binding Vision.Description.Captions}">
+            <ListView HasUnevenRows="True" ItemsSource="{Binding Vision.Description.Captions}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

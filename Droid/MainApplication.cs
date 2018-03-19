@@ -19,14 +19,14 @@ namespace maximst.CognitiveDemo.Droid
         public override void OnCreate()
         {
             base.OnCreate();
-            //RegisterActivityLifecycleCallbacks(this);
+            RegisterActivityLifecycleCallbacks(this);
             //A great place to initialize Xamarin.Insights and Dependency Services!
         }
 
         public override void OnTerminate()
         {
             base.OnTerminate();
-            //UnregisterActivityLifecycleCallbacks(this);
+            UnregisterActivityLifecycleCallbacks(this);
         }
 
         public void OnActivityCreated(Activity activity, Bundle savedInstanceState)
